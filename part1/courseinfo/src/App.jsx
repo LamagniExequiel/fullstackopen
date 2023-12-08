@@ -7,7 +7,7 @@ const Header = (props) =>{
 const Total = (props) => {
   return(
     <>
-      Number of exercises {props.total}
+      Number of exercises {props.total[0].exercises + props.total[1].exercises + props.total[2].exercises}
     </>
   )
 }
@@ -42,7 +42,7 @@ const App = () => {
     <div>
       <Header course = {course}/>
       <Content part = {part}/>
-      <Total total = {part[0].exercises + part[1].exercises + part[2].exercises}/>
+      <Total total = {part}/>
     </div>
   )
 }
