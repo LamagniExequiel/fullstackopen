@@ -1,11 +1,5 @@
-const Button = (props) =>{
-    return(
-        <div>
-            <button onClick = {props.handleClick}>
-                {props.text}
-            </button>
-        </div>
-    )
-}
-
+const Button = ({onSmash,text}) =>
+    <button onClick = {onSmash}>
+        {text}
+    </button>
 export default Button
