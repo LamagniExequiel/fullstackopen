@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Button from "./components/Button"
-import Display from "./components/Display"
 import Statistics from './components/Statistics'
 
 const App = () => {

@@ -1,4 +1,4 @@
-const Display = (props)=>{
+const StaticLine = (props)=>{
     return(
         <div>
             {props.text} {props.value} {props.symbol}
@@ -6,4 +6,4 @@ const Display = (props)=>{
     )
 }
 
-export default Display
+export default StaticLine

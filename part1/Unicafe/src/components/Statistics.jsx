@@ -1,4 +1,4 @@
-import Display from "./Display"
+import StaticLine from "./StaticLine"
 
 const Statistics = (props) =>{
 
@@ -9,11 +9,7 @@ const Statistics = (props) =>{
     const all = good + neutral + bad
     const average = calcAverage()
     const positive = calcPositive()
-
-    console.log(good)
-    console.log(bad)
-    console.log(neutral)
-
+    
     function calcAverage(){
         if(all === 0){
         return 0
@@ -37,12 +33,12 @@ const Statistics = (props) =>{
     }
     return(
         <div>
-            <Display text = "good" value = {good}/>
-            <Display text = "neutral" value = {neutral}/>
-            <Display text = "bad" value = {bad}/>
-            <Display text = "all" value = {all}/>
-            <Display text = "average" value = {average}/>
-            <Display text = "positive" value = {positive} symbol = "%"/>
+            <StaticLine text = "good" value = {good}/>
+            <StaticLine text = "neutral" value = {neutral}/>
+            <StaticLine text = "bad" value = {bad}/>
+            <StaticLine text = "all" value = {all}/>
+            <StaticLine text = "average" value = {average}/>
+            <StaticLine text = "positive" value = {positive} symbol = "%"/>
         </div>
     )
 }
