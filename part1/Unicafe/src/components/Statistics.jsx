@@ -9,7 +9,7 @@ const Statistics = (props) =>{
     const all = good + neutral + bad
     const average = calcAverage()
     const positive = calcPositive()
-    
+
     function calcAverage(){
         if(all === 0){
         return 0
@@ -32,14 +32,16 @@ const Statistics = (props) =>{
         )
     }
     return(
-        <div>
-            <StaticLine text = "good" value = {good}/>
-            <StaticLine text = "neutral" value = {neutral}/>
-            <StaticLine text = "bad" value = {bad}/>
-            <StaticLine text = "all" value = {all}/>
-            <StaticLine text = "average" value = {average}/>
-            <StaticLine text = "positive" value = {positive} symbol = "%"/>
-        </div>
+        <table>
+            <tbody>
+                <StaticLine text = "good" value = {good}/>
+                <StaticLine text = "neutral" value = {neutral}/>
+                <StaticLine text = "bad" value = {bad}/>
+                <StaticLine text = "all" value = {all}/>
+                <StaticLine text = "average" value = {average}/>
+                <StaticLine text = "positive" value = {positive} symbol = "%"/>
+            </tbody>
+        </table>
     )
 }
 

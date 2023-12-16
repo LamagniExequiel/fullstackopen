@@ -1,8 +1,10 @@
 const StaticLine = (props)=>{
     return(
-        <div>
-            {props.text} {props.value} {props.symbol}
-        </div>
+        <tr>
+            <td>{props.text}</td>
+            <td>{props.value}</td>
+            <td>{props.symbol}</td>
+        </tr>
     )
 }
 
