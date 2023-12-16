@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Button from "./components/Button"
 
 const App = () => {
+// constantes
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -14,6 +15,14 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(8).fill(0))
+  
+// funciones
+  const toVotes = () => {
+    const copy = [...votes]
+    copy[selected] += 1
+    setVotes(copy)
+  }
 
   const toSelected = () => {
     const newSelected = randomize()
@@ -23,11 +32,12 @@ const App = () => {
   function randomize(){
     return Math.floor(Math.random() * (8))
   }
-
+// return
   return (
     <div>
       {anecdotes[selected]}
       <br/>
+      <Button text = "vote" handleClick = {toVotes}/>
       <Button text = "next anecdote" handleClick = {toSelected}/>
     </div>
   )
