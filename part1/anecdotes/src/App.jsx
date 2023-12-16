@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Button from "./components/Button"
+import Display from "./components/Display"
 
 const App = () => {
 // constantes
@@ -16,8 +17,18 @@ const App = () => {
 
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(Array(8).fill(0))
+  const voted = maxVoted()
+  console.log(votes)
+  console.log(voted)
   
 // funciones
+
+  function maxVoted(){
+    const max = Math.max(...votes)
+    const pos = votes.indexOf(max)
+    return pos
+  }
+
   const toVotes = () => {
     const copy = [...votes]
     copy[selected] += 1
@@ -35,10 +46,13 @@ const App = () => {
 // return
   return (
     <div>
-      {anecdotes[selected]}
+      <Display text = {anecdotes[selected]} title = "Anecdote of the day"/>
       <br/>
       <Button text = "vote" handleClick = {toVotes}/>
       <Button text = "next anecdote" handleClick = {toSelected}/>
+      <br/>
+      <br/>
+      <Display text = {anecdotes[voted]} title = "Anecdote with most votes"/>
     </div>
   )
 }
