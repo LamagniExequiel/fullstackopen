@@ -10,6 +10,10 @@ const Statistics = (props) =>{
     const average = calcAverage()
     const positive = calcPositive()
 
+    console.log(good)
+    console.log(bad)
+    console.log(neutral)
+
     function calcAverage(){
         if(all === 0){
         return 0
@@ -24,9 +28,15 @@ const Statistics = (props) =>{
         return (good * 100)/all
     }
 
+    if((good + neutral + bad) === 0){
+        return(
+            <div>
+                No feedback given
+            </div>
+        )
+    }
     return(
         <div>
-            <h1>statistics</h1>
             <Display text = "good" value = {good}/>
             <Display text = "neutral" value = {neutral}/>
             <Display text = "bad" value = {bad}/>
