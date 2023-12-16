@@ -31,7 +31,7 @@ const Statistics = (props) =>{
     if((good + neutral + bad) === 0){
         return(
             <div>
-                No feedback given
+                No feedback given 
             </div>
         )
     }
