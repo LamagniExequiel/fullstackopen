@@ -1,5 +1,6 @@
 import Header from "./Header"
 import Content from "./Content"
+import TotalExercise from "./TotalExercise"
 
 const Course = (props) => {
     const {id, name, parts} = props.course
@@ -7,6 +8,7 @@ const Course = (props) => {
         <div>
             <Header name = {name}/>
             <Content parts = {parts}/>
+            <TotalExercise parts = {parts}/>
         </div>
     )
 }
