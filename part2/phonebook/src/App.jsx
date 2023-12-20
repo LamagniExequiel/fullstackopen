@@ -6,15 +6,23 @@ const App = () => {
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas' }
   ]) 
-  
   const [ newName, setNewName ] = useState('')
 
   const addContact = (event) => {
+
     event.preventDefault()
+    
     if(newName !== ""){
       const contactObject = {name: newName}
-      setPersons(persons.concat(contactObject))
-      setNewName("")
+
+      if(!persons.some(person => person.name === contactObject.name)){
+        setPersons(persons.concat(contactObject))
+        setNewName("")
+      }else{
+        alert(`${newName} is already added to phonebook`)
+      }
+    }else{
+      alert(`can't enter the same contact more than once`)
     }
   }
 
@@ -23,7 +31,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addContact}>
         <div>
-          <input placeholder='name' onChange={event => setNewName(event.target.value)}/>
+          <input placeholder='name' onChange={event=>setNewName(event.target.value)}/>
         </div>
         <div>
           <button type="submit">add</button>
