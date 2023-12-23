@@ -1,23 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Form from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
+import axios from 'axios'
 
 const App = () => {
-  //datos de contactos
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]) 
+  //usestate para datos de contactos
+  const [ persons, setPersons ] = useState([]) 
+
   //use satate para modificar el nombre y el numero
   const [ newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
   
   //constante para almacenar la lista a mostrar
-  const [showFilter,setFilter] = useState(persons)
+  const [showFilter,setFilter] = useState([])
+
+  //tomando datos del servidor
+  useEffect(()=>{
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+        setFilter(response.data)  
+      })
+
+  },[])
   
+
   //funciones para el formulario
   //funcion para modificar el array persons, con condiciones especificas
   const addContact = (event) => {
@@ -38,6 +47,7 @@ const App = () => {
       alert(`cannot add the same contac more than once`)
     }
   }
+
   //funciones para almacenar el nombre y numero del form
   const handleName = event => setNewName(event.target.value)
   const handleNumber = event=>setNewNumber(event.target.value)
