@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import Contacto from './components/Contacto'
+import Form from './components/PersonForm'
+import Filter from './components/Filter'
+import Persons from './components/Persons'
 
 const App = () => {
   //datos de contactos
@@ -16,6 +18,7 @@ const App = () => {
   //constante para almacenar la lista a mostrar
   const [showFilter,setFilter] = useState(persons)
   
+  //funciones para el formulario
   //funcion para modificar el array persons, con condiciones especificas
   const addContact = (event) => {
 
@@ -35,33 +38,30 @@ const App = () => {
       alert(`cannot add the same contac more than once`)
     }
   }
+  //funciones para almacenar el nombre y numero del form
+  const handleName = event => setNewName(event.target.value)
+  const handleNumber = event=>setNewNumber(event.target.value)
+  //fin de funciones de formulario
 
   //funcion para filtrar por name el array persons
   const handleFilterName = (event) => {
+
     setFilter(persons.filter(person => person.name.toLowerCase().includes(event.target.value.toLowerCase())))
-    console.log(showFilter,"hola")
+
   }
 
-  // console.log(showFilter.length === 0? persons: showFilter);
+
   return (
     <div>
+
       <h2>Phonebook</h2>
-      <form onSubmit={addContact}>
-        <div>
-          name: <input type= "text" name='name' required placeholder='example: Juan Perez' onChange={event=>setNewName(event.target.value)}/>
-          <br/>
-          number: <input type='number' name='number' required placeholder='example: 040-7654321' onChange={event=>setNewNumber(event.target.value)}/>
-        </div>
-        <br/>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <h3>add a new contact</h3>
+      <Form handleName = {handleName} handleNumber = {handleNumber} addContact = {addContact}/>
+
       <h2>Numbers</h2>
-      filter show with: <input type='text' name='filter' placeholder='insert name' onChange={handleFilterName}/>
-      <ul>
-        {showFilter.map(person => <Contacto key={person.name} person = {person}></Contacto>)}
-      </ul>
+      <Filter handleFilterName ={handleFilterName}/>
+      <Persons showFilter={showFilter}/>
+
     </div>
   )
 }
