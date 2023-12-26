@@ -7,6 +7,8 @@ function App() {
   const [countries,SetCountries] = useState([])
   const [filter,setFilter] = useState([])
   
+  console.log(filter);
+
   useEffect(()=>{
     axios
       .get("https://restcountries.com/v3.1/all")
@@ -19,12 +21,17 @@ function App() {
       setFilter(countries.filter(country => country.name.common.toLowerCase().includes(event.target.value.toLowerCase())))
   }
 
+  const changeFilter = (countryName)=>{
+    const countryObj = countries.find(country => country.name.common === countryName)
+    const filterAux = [countryObj]
+    setFilter(filterAux)
+  }
 
   return (
     <div>
-      find countries: <input type="text" placeholder='nombre del pais' onChange={filtrarPais}/>
+      find countries: <input type="text" placeholder='country name' onChange={filtrarPais}/>
       <br/><br/>
-      <ShowAll countries = {filter}/>
+      <ShowAll countries = {filter} handleFilter={changeFilter}/>
     </div>
   )
 }

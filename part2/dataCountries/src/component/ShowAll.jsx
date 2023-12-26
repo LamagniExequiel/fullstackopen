@@ -1,6 +1,13 @@
 import ShowCountries from "./showCountries"
+import ShowButton from "./ShowButton";
 
-const ShowAll = ({countries}) => {
+const ShowAll = ({countries,handleFilter}) => {
+
+    
+    function showCountry(event){
+       handleFilter(event.target.name)
+    }
+
     if(countries.length === 0){
         return(
             <div>
@@ -16,7 +23,7 @@ const ShowAll = ({countries}) => {
     }else if(countries.length < 10 && countries.length > 1){
         return(
             <ul>
-                {countries.map(country => <li>{country.name.common}</li>)}
+                {countries.map(country => <ShowButton key={country.name.official} country = {country} handleClick = {showCountry}/>)}
             </ul>
         )
     }else if(countries.length === 1){
