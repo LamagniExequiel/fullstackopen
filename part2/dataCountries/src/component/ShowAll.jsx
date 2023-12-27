@@ -1,5 +1,6 @@
 import ShowCountries from "./showCountries"
 import ShowButton from "./ShowButton";
+import { useState,useEffect } from "react";
 
 const ShowAll = ({countries,handleFilter}) => {
 
@@ -27,6 +28,7 @@ const ShowAll = ({countries,handleFilter}) => {
             </ul>
         )
     }else if(countries.length === 1){
+
         return(
             <ShowCountries country = {countries[0]}/>
         )

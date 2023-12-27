@@ -18,6 +18,7 @@ function App() {
   },[])
 
   const filtrarPais = (event) =>{
+    if(event.key === "Enter")
       setFilter(countries.filter(country => country.name.common.toLowerCase().includes(event.target.value.toLowerCase())))
   }
 
@@ -29,7 +30,7 @@ function App() {
 
   return (
     <div>
-      find countries: <input type="text" placeholder='country name' onChange={filtrarPais}/>
+      find countries: <input type="text" placeholder='press Enter to search' onKeyDown={filtrarPais}/>
       <br/><br/>
       <ShowAll countries = {filter} handleFilter={changeFilter}/>
     </div>
