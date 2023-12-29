@@ -25,6 +25,13 @@ const App = () => {
     persosnsServices.getAll().then(response => {
         setPersons(response)
         setFilter(response)  
+      }).catch(()=>{
+        if(confirm("problems connecting to the server, reload page ?")){
+          location. reload()
+        }else{
+          close()
+        }
+  
       })
 
   },[actualizar])
@@ -45,13 +52,27 @@ const App = () => {
         
       persosnsServices.create(contactObject).then(()=>{
         setActualizar(actualizar+1)
+      }).catch(()=>{
+        alert("problems adding contact")
       })
 
     }else{
-      alert(`${newName} is already added to phonebook`)
+      if(confirm(`${newName} is already added to phonebook, replace the old number with a new one ?`)){
+        const id = persons.find(person => person.name === contactObject.name).id
+        changeNumber(id,contactObject)
+        setActualizar(actualizar+1)
+      }
     }
   }
 
+  //funcion para cambiar el numero
+  const changeNumber = (id,contactObject) =>{
+      persosnsServices.update(id,contactObject).then(response => {
+        console.log(response);
+      }).catch(()=>{
+        alert("problems changing the number")
+      })
+  }
 
   //funciones para almacenar el nombre y numero del form
   const handleName = event => setNewName(event.target.value)
