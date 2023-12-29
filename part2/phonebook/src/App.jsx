@@ -5,6 +5,8 @@ import Persons from './components/Persons'
 import persosnsServices from './services/conections'
 
 const App = () => {
+
+  //definicion de constantes y/o variables
   //usestate para datos de contactos
   const [ persons, setPersons ] = useState([]) 
 
@@ -15,6 +17,9 @@ const App = () => {
   //constante para almacenar la lista a mostrar
   const [showFilter,setFilter] = useState([])
 
+  const [actualizar,setActualizar] = useState(0)
+  //------------------------------------
+
   //tomando datos del servidor
   useEffect(()=>{
     persosnsServices.getAll().then(response => {
@@ -22,38 +27,53 @@ const App = () => {
         setFilter(response)  
       })
 
-  },[])
-  
+  },[actualizar])
+  //-----------------------------------
+
+  console.log(persons)
+  console.log(actualizar);
 
   //funciones para el formulario
-  //funcion para modificar el array persons, con condiciones especificas
+  //funcion para modificar el array persons, con condiciones especificas y actualiar la base de datos
   const addContact = (event) => {
 
     event.preventDefault()
     
-    if(newName !== ""){
-      const contactObject = {name: newName, number: newNumber}
+    const contactObject = {name: newName, number: newNumber}
 
-      if(!persons.some(person => person.name === contactObject.name)){
+    if(!persons.some(person => person.name === contactObject.name)){
         
-        persosnsServices.create(contactObject).then(()=>{
-          setPersons(persons.concat(contactObject))
-          setFilter(showFilter.concat(contactObject))
-          setNewName("")
-        })
-        
-      }else{
-        alert(`${newName} is already added to phonebook`)
-      }
+      persosnsServices.create(contactObject).then(()=>{
+        setActualizar(actualizar+1)
+      })
+
     }else{
-      alert(`cannot add the same contac more than once`)
+      alert(`${newName} is already added to phonebook`)
     }
   }
+
 
   //funciones para almacenar el nombre y numero del form
   const handleName = event => setNewName(event.target.value)
   const handleNumber = event=>setNewNumber(event.target.value)
+
   //fin de funciones de formulario
+  //----------------------------------
+
+  //funcion para eliminar datos de la base de datos
+  const eliminatePerson = id =>{
+    persosnsServices.eliminate(id).then(response =>{
+      setActualizar(actualizar+1)
+      console.log(response)
+    })
+    .catch(error => {
+      alert(
+        `the note person was already deleted from server`
+      )
+    })
+  }
+
+  //---------------------------------
 
   //funcion para filtrar por name el array persons
   const handleFilterName = (event) => {
@@ -61,8 +81,9 @@ const App = () => {
     setFilter(persons.filter(person => person.name.toLowerCase().includes(event.target.value.toLowerCase())))
 
   }
+  //--------------------------------------
 
-
+  //return de app
   return (
     <div>
 
@@ -72,7 +93,7 @@ const App = () => {
 
       <h2>Numbers</h2>
       <Filter handleFilterName ={handleFilterName}/>
-      <Persons showFilter={showFilter}/>
+      <Persons showFilter={showFilter} eliminatePerson = {eliminatePerson}/>
 
     </div>
   )
