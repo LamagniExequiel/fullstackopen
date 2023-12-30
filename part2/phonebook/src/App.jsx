@@ -3,6 +3,7 @@ import Form from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import persosnsServices from './services/conections'
+import Notification from './components/Notification'
 
 const App = () => {
 
@@ -17,7 +18,12 @@ const App = () => {
   //constante para almacenar la lista a mostrar
   const [showFilter,setFilter] = useState([])
 
+  //valor para actualizar la lista y no tener problemas de asincronicidad
   const [actualizar,setActualizar] = useState(0)
+
+  //valor del mensaje
+  const [message,setMessage] = useState(null)
+
   //------------------------------------
 
   //tomando datos del servidor
@@ -51,6 +57,10 @@ const App = () => {
     if(!persons.some(person => person.name === contactObject.name)){
         
       persosnsServices.create(contactObject).then(()=>{
+        setMessage(`added ${contactObject.name}`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
         setActualizar(actualizar+1)
       }).catch(()=>{
         alert("problems adding contact")
@@ -68,7 +78,10 @@ const App = () => {
   //funcion para cambiar el numero
   const changeNumber = (id,contactObject) =>{
       persosnsServices.update(id,contactObject).then(response => {
-        console.log(response);
+        setMessage(`number of ${contactObject.name} changed`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       }).catch(()=>{
         alert("problems changing the number")
       })
@@ -109,6 +122,7 @@ const App = () => {
     <div>
 
       <h2>Phonebook</h2>
+      <Notification message={message}/>
       <h3>add a new contact</h3>
       <Form handleName = {handleName} handleNumber = {handleNumber} addContact = {addContact}/>
 
