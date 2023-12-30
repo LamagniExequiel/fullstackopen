@@ -21,7 +21,7 @@ const App = () => {
   //valor para actualizar la lista y no tener problemas de asincronicidad
   const [actualizar,setActualizar] = useState(0)
 
-  //valor del mensaje
+  //objeto del mensaje y unj booleano que es true si el mensaje es de exito
   const [message,setMessage] = useState(null)
 
   //------------------------------------
@@ -57,7 +57,7 @@ const App = () => {
     if(!persons.some(person => person.name === contactObject.name)){
         
       persosnsServices.create(contactObject).then(()=>{
-        setMessage(`added ${contactObject.name}`)
+        setMessage({text:`added ${contactObject.name}`,type: true})
         setTimeout(() => {
           setMessage(null)
         }, 5000)
@@ -78,12 +78,15 @@ const App = () => {
   //funcion para cambiar el numero
   const changeNumber = (id,contactObject) =>{
       persosnsServices.update(id,contactObject).then(response => {
-        setMessage(`number of ${contactObject.name} changed`)
+        setMessage({text:`number of ${contactObject.name} changed`,type: true})
         setTimeout(() => {
           setMessage(null)
         }, 5000)
       }).catch(()=>{
-        alert("problems changing the number")
+        setMessage({text:`information of ${contactObject.name} has already been remove from server`,type: false})
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       })
   }
 

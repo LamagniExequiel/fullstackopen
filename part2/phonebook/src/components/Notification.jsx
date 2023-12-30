@@ -1,7 +1,7 @@
 const Notification = ({ message }) => {
 
     const styleMessage = {
-        color: 'green',
+        color: message !== null?(message.type?'green':'red'):'red',
         background: 'lightgrey',
         fontSize: 20,
         borderStyle: 'solid',
@@ -16,7 +16,7 @@ const Notification = ({ message }) => {
   
     return (
       <div style={styleMessage}>
-        {message}
+        {message.text}
       </div>
     )
   }
